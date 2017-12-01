@@ -1,5 +1,7 @@
 # fast-unique-numbers
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chrisguttandin/fast-unique-numbers.svg)](https://greenkeeper.io/)
+
 **A module to create a set of unique numbers as fast as possible.**
 
 [![tests](https://img.shields.io/travis/chrisguttandin/fast-unique-numbers/master.svg?style=flat-square)](https://travis-ci.org/chrisguttandin/fast-unique-numbers)
