@@ -4,6 +4,54 @@ describe('module', () => {
 
     describe('generateUniqueNumber()', () => {
 
+        describe('with an empty map', () => {
+
+            let map;
+
+            beforeEach(() => {
+                map = new Map();
+            });
+
+            it('should generate a number', () => {
+                expect(generateUniqueNumber(map)).to.be.a('number');
+            });
+
+            it('should generate unique numbers', () => {
+                for (let i = 0; i < 1000; i += 1) {
+                    const number = generateUniqueNumber(map);
+
+                    expect(map.has(number)).to.be.false;
+
+                    map.set(number, true);
+                }
+            });
+
+        });
+
+        describe('with a prefilled map', () => {
+
+            let map;
+
+            beforeEach(() => {
+                map = new Map([ [ 0, true ], [ 1, true ], [ 2, true ], [ 3, true ] ]);
+            });
+
+            it('should generate a number', () => {
+                expect(generateUniqueNumber(map)).to.be.a('number');
+            });
+
+            it('should generate unique numbers', () => {
+                for (let i = 0; i < 1000; i += 1) {
+                    const number = generateUniqueNumber(map);
+
+                    expect(map.has(number)).to.be.false;
+
+                    map.set(number, true);
+                }
+            });
+
+        });
+
         describe('with an empty set', () => {
 
             let set;
