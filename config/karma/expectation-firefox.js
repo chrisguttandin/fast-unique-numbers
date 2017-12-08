@@ -101,7 +101,7 @@ module.exports = (config) => {
         config.set({
 
             browsers: [
-                'Firefox'
+                'FirefoxHeadless'
             ]
 
         });
