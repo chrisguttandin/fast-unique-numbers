@@ -4,6 +4,11 @@
   "bugs": {
     "url": "https://github.com/chrisguttandin/fast-unique-numbers/issues"
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "tslib": "^1.9.0"
@@ -60,8 +65,8 @@
     "node": ">=6.11.2"
   },
   "files": [
-    "build/es5/",
     "build/es2015/",
+    "build/es5/",
     "build/esm/",
     "build/node/",
     "src/"
