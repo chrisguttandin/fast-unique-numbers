@@ -64,7 +64,7 @@
     "webpack": "^4.5.0"
   },
   "engines": {
-    "node": ">=6.11.2"
+    "node": ">=8.11.1"
   },
   "files": [
     "build/es2015/",
