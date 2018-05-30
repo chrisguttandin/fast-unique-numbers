@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "tslib": "^1.9.1"
+    "tslib": "^1.9.2"
   },
   "description": "A module to create a set of unique numbers as fast as possible.",
   "devDependencies": {
