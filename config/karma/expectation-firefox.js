@@ -17,12 +17,14 @@ module.exports = (config) => {
                 included: false,
                 pattern: 'src/**',
                 served: false
-            }, {
+            },
+            {
                 included: true,
                 pattern: require.resolve('lodash'),
                 served: true,
                 watched: false
-            }, {
+            },
+            {
                 included: true,
                 pattern: require.resolve('benchmark'),
                 served: true,
