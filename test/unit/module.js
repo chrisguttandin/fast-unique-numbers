@@ -26,6 +26,14 @@ describe('module', () => {
                 }
             });
 
+            it('should generate consecutive numbers', () => {
+                for (let i = 0; i < 1000; i += 1) {
+                    const number = generateUniqueNumber(map);
+
+                    expect(number).to.equal(i);
+                }
+            });
+
         });
 
         describe('with a prefilled map', () => {
@@ -47,6 +55,14 @@ describe('module', () => {
                     expect(map.has(number)).to.be.false;
 
                     map.set(number, true);
+                }
+            });
+
+            it('should generate consecutive numbers', () => {
+                for (let i = 0; i < 1000; i += 1) {
+                    const number = generateUniqueNumber(map);
+
+                    expect(number).to.equal(i + 4);
                 }
             });
 
@@ -74,6 +90,14 @@ describe('module', () => {
                 }
             });
 
+            it('should generate consecutive numbers', () => {
+                for (let i = 0; i < 1000; i += 1) {
+                    const number = generateUniqueNumber(set);
+
+                    expect(number).to.equal(i);
+                }
+            });
+
         });
 
         describe('with a prefilled set', () => {
@@ -95,6 +119,14 @@ describe('module', () => {
                     expect(set.has(number)).to.be.false;
 
                     set.add(number);
+                }
+            });
+
+            it('should generate consecutive numbers', () => {
+                for (let i = 0; i < 1000; i += 1) {
+                    const number = generateUniqueNumber(set);
+
+                    expect(number).to.equal(i + 4);
                 }
             });
 

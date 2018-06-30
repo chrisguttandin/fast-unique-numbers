@@ -5,6 +5,12 @@ const LAST_NUMBER_WEAK_MAP = new WeakMap<(Map<number, any> | Set<number>), numbe
  */
 const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;
 
+const cache = (collection: (Map<number, any> | Set<number>), nextNumber: number) => {
+    LAST_NUMBER_WEAK_MAP.set(collection, nextNumber);
+
+    return nextNumber;
+};
+
 export const generateUniqueNumber = (collection: (Map<number, any> | Set<number>)): number => {
     const lastNumber = LAST_NUMBER_WEAK_MAP.get(collection);
 
@@ -12,9 +18,19 @@ export const generateUniqueNumber = (collection: (Map<number, any> | Set<number>
      * Let's try the cheapest algorithm first. It might fail to produce a new
      * number, but it is so cheap that it is okay to take the risk. Just
      * increase the last number by one or reset it to 0 if we reached the upper
-     * bound of SMIs (which stands for small integers).
+     * bound of SMIs (which stands for small integers). When the last number is
+     * unknown it is assumed that the collection contains zero based consecutive
+     * numbers.
      */
-    let nextNumber = (lastNumber === undefined || lastNumber > 2147483648) ? 0 : lastNumber + 1;
+    let nextNumber = (lastNumber === undefined) ?
+        collection.size :
+        (lastNumber > 2147483648) ?
+            0 :
+            lastNumber + 1;
+
+    if (!collection.has(nextNumber)) {
+        return cache(collection, nextNumber);
+    }
 
     /*
      * If there are less than half of 2 ** 31 numbers stored in the collection,
@@ -27,9 +43,7 @@ export const generateUniqueNumber = (collection: (Map<number, any> | Set<number>
             nextNumber = Math.floor(Math.random() * 2147483648);
         }
 
-        LAST_NUMBER_WEAK_MAP.set(collection, nextNumber);
-
-        return nextNumber;
+        return cache(collection, nextNumber);
     }
 
     // Quickly check if there is a theoretical chance to generate a new number.
@@ -42,7 +56,5 @@ export const generateUniqueNumber = (collection: (Map<number, any> | Set<number>
         nextNumber = Math.floor(Math.random() * MAX_SAFE_INTEGER);
     }
 
-    LAST_NUMBER_WEAK_MAP.set(collection, nextNumber);
-
-    return nextNumber;
+    return cache(collection, nextNumber);
 };
