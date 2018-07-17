@@ -1,3 +1,5 @@
+const { env } = require('process');
+
 module.exports = (config) => {
 
     config.set({
@@ -71,13 +73,13 @@ module.exports = (config) => {
 
     });
 
-    if (process.env.TRAVIS) {
+    if (env.TRAVIS) {
 
         config.set({
 
             browserStack: {
-                accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
-                username: process.env.BROWSER_STACK_USERNAME
+                accessKey: env.BROWSER_STACK_ACCESS_KEY,
+                username: env.BROWSER_STACK_USERNAME
             },
 
             browsers: [
@@ -95,7 +97,7 @@ module.exports = (config) => {
                 }
             },
 
-            tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+            tunnelIdentifier: env.TRAVIS_JOB_NUMBER
 
         });
 
