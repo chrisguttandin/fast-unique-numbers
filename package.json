@@ -72,6 +72,12 @@
     "src/"
   ],
   "homepage": "https://github.com/chrisguttandin/fast-unique-numbers",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint --edit --extends @commitlint/config-angular",
+      "pre-commit": "grunt lint"
+    }
+  },
   "license": "MIT",
   "main": "build/node/module.js",
   "module": "build/esm/module.js",
@@ -81,8 +87,6 @@
     "url": "https://github.com/chrisguttandin/fast-unique-numbers.git"
   },
   "scripts": {
-    "commitmsg": "commitlint --edit --extends @commitlint/config-angular",
-    "precommit": "grunt lint",
     "prepublishOnly": "grunt build",
     "test": "grunt lint && grunt test"
   },
