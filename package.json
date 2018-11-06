@@ -10,7 +10,7 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.1.2",
+    "@babel/runtime": "^7.1.5",
     "tslib": "^1.9.3"
   },
   "description": "A module to create a set of unique numbers as fast as possible.",
