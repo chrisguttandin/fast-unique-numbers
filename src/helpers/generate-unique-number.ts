@@ -3,7 +3,7 @@ const LAST_NUMBER_WEAK_MAP = new WeakMap<(Map<number, any> | Set<number>), numbe
  * The value of the constant Number.MAX_SAFE_INTEGER equals (2 ** 53 - 1) but it
  * is fairly new.
  */
-const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;
+const MAX_SAFE_INTEGER = (Number.MAX_SAFE_INTEGER === undefined) ? 9007199254740991 : Number.MAX_SAFE_INTEGER;
 
 const cache = (collection: (Map<number, any> | Set<number>), nextNumber: number) => {
     LAST_NUMBER_WEAK_MAP.set(collection, nextNumber);
