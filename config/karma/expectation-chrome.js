@@ -12,8 +12,6 @@ module.exports = (config) => {
 
         browserNoActivityTimeout: 300000,
 
-        concurrency: 1,
-
         files: [
             {
                 included: false,
@@ -107,7 +105,9 @@ module.exports = (config) => {
 
             browsers: [
                 'ChromeHeadless'
-            ]
+            ],
+
+            concurrency: 1
 
         });
 
