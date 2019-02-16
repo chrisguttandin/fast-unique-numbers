@@ -4,7 +4,7 @@
     },
     "extends": "eslint-config-holy-grail",
     "globals": {
-        "expect": "readable"
+        "expect": "readonly"
     },
     "rules": {
         "no-unused-expressions": 0
