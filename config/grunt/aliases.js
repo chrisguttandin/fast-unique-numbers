@@ -18,6 +18,6 @@ module.exports = {
         'karma:test-chrome',
         'karma:test-firefox',
         'build',
-        'mochaTest:test'
+        'sh:test-unit'
     ]
 };
