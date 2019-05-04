@@ -6,7 +6,7 @@ module.exports = (config) => {
 
         basePath: '../../',
 
-        browserDisconnectTimeout: 20000,
+        browserDisconnectTimeout: 40000,
 
         browserDisconnectTolerance: 10,
 
