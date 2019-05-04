@@ -93,9 +93,7 @@ module.exports = (config) => {
                     os: 'OS X',
                     os_version: 'Sierra' // eslint-disable-line camelcase
                 }
-            },
-
-            tunnelIdentifier: env.TRAVIS_JOB_NUMBER
+            }
 
         });
 

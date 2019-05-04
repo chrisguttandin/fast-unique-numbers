@@ -73,9 +73,7 @@ module.exports = (config) => {
                     browserName: 'safari',
                     platform: 'OS X 10.11'
                 }
-            },
-
-            tunnelIdentifier: env.TRAVIS_JOB_NUMBER
+            }
 
         });
 
