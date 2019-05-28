@@ -61,7 +61,7 @@
     "webpack": "^4.32.2"
   },
   "engines": {
-    "node": ">=8.11.1"
+    "node": ">=10.15.3"
   },
   "files": [
     "build/es2018/",
