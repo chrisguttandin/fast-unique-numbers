@@ -93,7 +93,7 @@ module.exports = (config) => {
                     base: 'BrowserStack',
                     browser: 'firefox',
                     os: 'OS X',
-                    os_version: 'Sierra' // eslint-disable-line camelcase
+                    os_version: 'Mojave' // eslint-disable-line camelcase
                 }
             }
 
