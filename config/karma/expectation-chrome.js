@@ -92,8 +92,8 @@ module.exports = (config) => {
                 ChromeBrowserStack: {
                     base: 'BrowserStack',
                     browser: 'chrome',
-                    os: 'OS X',
-                    os_version: 'High Sierra' // eslint-disable-line camelcase
+                    os: 'Windows',
+                    os_version: '10' // eslint-disable-line camelcase
                 }
             }
 
