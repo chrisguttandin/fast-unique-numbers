@@ -1,16 +1,12 @@
 module.exports = {
-    'performance': {
-        configFile: 'config/karma/config-performance.js',
-        singleRun: true
-    },
-    'test': {
-        configFile: 'config/karma/config.js',
-        singleRun: true
-    },
-    'test-chrome': {
+    'expectation-chrome': {
         configFile: 'config/karma/expectation-chrome.js'
     },
-    'test-firefox': {
+    'expectation-firefox': {
         configFile: 'config/karma/expectation-firefox.js'
+    },
+    'unit': {
+        configFile: 'config/karma/unit.js',
+        singleRun: true
     }
 };

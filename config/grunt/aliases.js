@@ -1,3 +1,5 @@
+const { env } = require('process');
+
 module.exports = {
     build: [
         'clean:build',
@@ -14,11 +16,35 @@ module.exports = {
         'karma:performance'
     ],
     test: [
-        'karma:test',
-        'karma:test-chrome',
-        'karma:test-firefox',
         'build',
-        'sh:test-expectation',
-        'sh:test-unit'
+        ...(env.TARGET === 'chrome' && [ 'expectation', undefined ].includes(env.TYPE))
+            ? [
+                'karma:expectation-chrome'
+            ]
+            : (env.TARGET === 'firefox' && [ 'expectation', undefined ].includes(env.TYPE))
+                ? [
+                    'karma:expectation-firefox'
+                ]
+                : (env.TARGET === undefined && [ 'expectation', undefined ].includes(env.TYPE))
+                    ? [
+                        'karma:expectation-chrome',
+                        'karma:expectation-firefox'
+                    ]
+                    : [ ],
+        ...([ 'chrome', 'firefox', 'safari', undefined ].includes(env.TARGET) && [ 'unit', undefined ].includes(env.TYPE))
+            ? [
+                'karma:unit'
+            ]
+            : [ ],
+        ...([ 'node', undefined ].includes(env.TARGET) && [ 'expectation', undefined ].includes(env.TYPE))
+            ? [
+                'sh:test-expectation'
+            ]
+            : [ ],
+        ...([ 'node', undefined ].includes(env.TARGET) && [ 'unit', undefined ].includes(env.TYPE))
+            ? [
+                'sh:test-unit'
+            ]
+            : [ ]
     ]
 };
