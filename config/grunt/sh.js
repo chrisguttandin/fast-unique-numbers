@@ -8,6 +8,9 @@ module.exports = {
     'lint': {
         cmd: 'tslint --config config/tslint/src.json --project src/tsconfig.json src/*.ts src/**/*.ts'
     },
+    'test-expectation': {
+        cmd: 'mocha --bail --recursive --require config/mocha/config-expectation.js test/expectation/node'
+    },
     'test-unit': {
         cmd: 'mocha --bail --recursive --require config/mocha/config-unit.js test/unit'
     }

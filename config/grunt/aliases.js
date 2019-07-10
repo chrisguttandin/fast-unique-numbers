@@ -18,6 +18,7 @@ module.exports = {
         'karma:test-chrome',
         'karma:test-firefox',
         'build',
+        'sh:test-expectation',
         'sh:test-unit'
     ]
 };
