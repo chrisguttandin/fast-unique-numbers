@@ -43,7 +43,7 @@ describe('Array/Map/Set modifications', () => {
                 expect(meanOfSlowestSetBenchmark).to.be.below(meanOfFastestArrayBenchmark);
 
                 // Expect all the Map and Set benchmarks to not differ much.
-                expect(meanOfSlowestMapOrSetBenchmark - meanOfFastestMapOrSetBenchmark).to.be.below(0.002);
+                expect(meanOfSlowestMapOrSetBenchmark - meanOfFastestMapOrSetBenchmark).to.be.below(0.005);
 
                 done();
             }
