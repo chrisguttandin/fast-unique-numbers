@@ -24,7 +24,7 @@ export const generateUniqueNumber = (collection: (Map<number, any> | Set<number>
      */
     let nextNumber = (lastNumber === undefined) ?
         collection.size :
-        (lastNumber > 2147483648) ?
+        (lastNumber > 2147483646) ?
             0 :
             lastNumber + 1;
 
