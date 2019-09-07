@@ -8,7 +8,7 @@
 
 This module is meant to create unique numbers within a given [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) or [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set). To achieve that as fast as possible the resulting set of numbers will only contain integers. For as long as possible only small integers will be used. This is a special integer representation that [V8](https://v8.dev) uses to store integers more efficiently.
 
-To verify the expected perfomance benefit an expectation test is used to make sure small integers do actually perform better. A complementary test is used to make sure the perfomance gain is not negated by causing unexpected behavior when running in Firefox.
+To verify the expected perfomance benefit an expectation test is used to make sure small integers do actually perform better. A complementary test is used to make sure the perfomance gain achieved in Chromium based browsers and Node.js is not negated by causing unexpected behavior when running in Firefox.
 
 ## Usage
 
