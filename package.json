@@ -74,6 +74,10 @@
       "pre-commit": "grunt lint"
     }
   },
+  "keywords": [
+    "performance",
+    "speed"
+  ],
   "license": "MIT",
   "main": "build/node/module.js",
   "module": "build/es2018/module.js",
