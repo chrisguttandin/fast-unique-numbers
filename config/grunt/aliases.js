@@ -12,38 +12,35 @@ module.exports = {
         'sh:lint-src',
         'sh:lint-test'
     ],
-    performance: [
-        'karma:performance'
-    ],
     test: [
         'build',
         ...(env.TARGET === 'chrome' && [ 'expectation', undefined ].includes(env.TYPE))
             ? [
-                'karma:expectation-chrome'
+                'sh:test-expectation-chrome'
             ]
             : (env.TARGET === 'firefox' && [ 'expectation', undefined ].includes(env.TYPE))
                 ? [
-                    'karma:expectation-firefox'
+                    'sh:test-expectation-firefox'
                 ]
-                : (env.TARGET === undefined && [ 'expectation', undefined ].includes(env.TYPE))
+                : (env.TARGET === 'node' && [ 'expectation', undefined ].includes(env.TYPE))
                     ? [
-                        'karma:expectation-chrome',
-                        'karma:expectation-firefox'
+                        'sh:test-expectation-node'
                     ]
-                    : [ ],
+                    : (env.TARGET === undefined && [ 'expectation', undefined ].includes(env.TYPE))
+                        ? [
+                            'sh:test-expectation-chrome',
+                            'sh:test-expectation-firefox',
+                            'sh:test-expectation-node'
+                        ]
+                        : [ ],
         ...([ 'chrome', 'firefox', 'safari', undefined ].includes(env.TARGET) && [ 'unit', undefined ].includes(env.TYPE))
             ? [
-                'karma:unit'
-            ]
-            : [ ],
-        ...([ 'node', undefined ].includes(env.TARGET) && [ 'expectation', undefined ].includes(env.TYPE))
-            ? [
-                'sh:test-expectation'
+                'sh:test-unit-browser'
             ]
             : [ ],
         ...([ 'node', undefined ].includes(env.TARGET) && [ 'unit', undefined ].includes(env.TYPE))
             ? [
-                'sh:test-unit'
+                'sh:test-unit-node'
             ]
             : [ ]
     ]
