@@ -3,7 +3,7 @@ const { env } = require('process');
 module.exports = {
     build: [
         'clean:build',
-        'sh:build-es2018',
+        'sh:build-es2019',
         'sh:build-es5',
         'babel:build'
     ],
