@@ -1,5 +1,10 @@
 const { env } = require('process');
 
+// eslint-disable-next-line padding-line-between-statements
+const filter = (predicate, ...tasks) => (predicate) ? tasks : [ ];
+const isTarget = (...targets) => (env.TARGET === undefined || targets.includes(env.TARGET));
+const isType = (...types) => (env.TYPE === undefined || types.includes(env.TYPE));
+
 module.exports = {
     build: [
         'clean:build',
@@ -14,34 +19,16 @@ module.exports = {
     ],
     test: [
         'build',
-        ...(env.TARGET === 'chrome' && [ 'expectation', undefined ].includes(env.TYPE))
-            ? [
-                'sh:test-expectation-chrome'
-            ]
-            : (env.TARGET === 'firefox' && [ 'expectation', undefined ].includes(env.TYPE))
-                ? [
-                    'sh:test-expectation-firefox'
-                ]
-                : (env.TARGET === 'node' && [ 'expectation', undefined ].includes(env.TYPE))
-                    ? [
-                        'sh:test-expectation-node'
-                    ]
-                    : (env.TARGET === undefined && [ 'expectation', undefined ].includes(env.TYPE))
-                        ? [
-                            'sh:test-expectation-chrome',
-                            'sh:test-expectation-firefox',
-                            'sh:test-expectation-node'
-                        ]
-                        : [ ],
-        ...([ 'chrome', 'firefox', 'safari', undefined ].includes(env.TARGET) && [ 'unit', undefined ].includes(env.TYPE))
-            ? [
-                'sh:test-unit-browser'
-            ]
-            : [ ],
-        ...([ 'node', undefined ].includes(env.TARGET) && [ 'unit', undefined ].includes(env.TYPE))
-            ? [
-                'sh:test-unit-node'
-            ]
-            : [ ]
+        ...filter(
+            isType('expectation'),
+            ...filter(isTarget('chrome'), 'sh:test-expectation-chrome'),
+            ...filter(isTarget('firefox'), 'sh:test-expectation-firefox'),
+            ...filter(isTarget('node'), 'sh:test-expectation-node')
+        ),
+        ...filter(
+            isType('unit'),
+            ...filter(isTarget('chrome', 'firefox', 'safari'), 'sh:test-unit-browser'),
+            ...filter(isTarget('node'), 'sh:test-unit-node')
+        )
     ]
 };
