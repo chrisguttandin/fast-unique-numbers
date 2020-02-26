@@ -5,6 +5,8 @@ import { TGenerateUniqueNumberFactory } from '../types';
  * is fairly new.
  */
 const MAX_SAFE_INTEGER = (Number.MAX_SAFE_INTEGER === undefined) ? 9007199254740991 : Number.MAX_SAFE_INTEGER;
+const TWO_TO_THE_POWER_OF_TWENTY_NINE = 536870912;
+const TWO_TO_THE_POWER_OF_THIRTY = TWO_TO_THE_POWER_OF_TWENTY_NINE * 2;
 
 export const createGenerateUniqueNumber: TGenerateUniqueNumberFactory = (cache, lastNumberWeakMap) => {
     return (collection) => {
@@ -18,25 +20,25 @@ export const createGenerateUniqueNumber: TGenerateUniqueNumberFactory = (cache, 
          * unknown it is assumed that the collection contains zero based consecutive
          * numbers.
          */
-        let nextNumber = (lastNumber === undefined) ?
-            collection.size :
-            (lastNumber > 2147483646) ?
-                0 :
-                lastNumber + 1;
+        let nextNumber = (lastNumber === undefined)
+            ? collection.size
+            : (lastNumber < TWO_TO_THE_POWER_OF_THIRTY)
+                ? lastNumber + 1
+                : 0;
 
         if (!collection.has(nextNumber)) {
             return cache(collection, nextNumber);
         }
 
         /*
-         * If there are less than half of 2 ** 31 numbers stored in the collection,
-         * the chance to generate a new random number in the range from 0 to 2 ** 31
+         * If there are less than half of 2 ** 30 numbers stored in the collection,
+         * the chance to generate a new random number in the range from 0 to 2 ** 30
          * is at least 50%. It's benifitial to use only SMIs because they perform
          * much better in any environment based on V8.
          */
-        if (collection.size < 1073741824) {
+        if (collection.size < TWO_TO_THE_POWER_OF_TWENTY_NINE) {
             while (collection.has(nextNumber)) {
-                nextNumber = Math.floor(Math.random() * 2147483648);
+                nextNumber = Math.floor(Math.random() * TWO_TO_THE_POWER_OF_THIRTY);
             }
 
             return cache(collection, nextNumber);

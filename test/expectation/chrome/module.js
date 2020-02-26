@@ -16,34 +16,13 @@ describe('Array/Map/Set modifications', () => {
 
         const suite = new Benchmark.Suite('random number', { // eslint-disable-line no-undef
             onComplete: () => {
-                const indexAndMeans = _ // eslint-disable-line no-undef
+                const indexOfFastestBenchmark = _ // eslint-disable-line no-undef
                     .range(0, suite.length)
-                    .map((index) => ({ index, mean: suite[index].stats.mean }));
-                const [ meanOfFastestArrayBenchmark ] = indexAndMeans
-                    .slice(0, 3)
+                    .map((index) => ({ index, mean: suite[index].stats.mean }))
                     .sort((a, b) => a.mean - b.mean)
-                    .map(({ mean }) => mean);
-                const [ meanOfFastestMapBenchmark, , meanOfSlowestMapBenchmark ] = indexAndMeans
-                    .slice(3, 6)
-                    .sort((a, b) => a.mean - b.mean)
-                    .map(({ mean }) => mean);
-                const [ meanOfFastestSetBenchmark, , meanOfSlowestSetBenchmark ] = indexAndMeans
-                    .slice(6, 9)
-                    .sort((a, b) => a.mean - b.mean)
-                    .map(({ mean }) => mean);
-                const meanOfFastestMapOrSetBenchmark = (meanOfFastestMapBenchmark < meanOfFastestSetBenchmark) ?
-                    meanOfFastestMapBenchmark :
-                    meanOfFastestSetBenchmark;
-                const meanOfSlowestMapOrSetBenchmark = (meanOfSlowestMapBenchmark > meanOfSlowestSetBenchmark) ?
-                    meanOfSlowestMapBenchmark :
-                    meanOfSlowestSetBenchmark;
+                    .map(({ index }) => index)[0];
 
-                // Expect the usage of a Map or Set to be always faster as using an Array.
-                expect(meanOfSlowestMapBenchmark).to.be.below(meanOfFastestArrayBenchmark);
-                expect(meanOfSlowestSetBenchmark).to.be.below(meanOfFastestArrayBenchmark);
-
-                // Expect all the Map and Set benchmarks to not differ much.
-                expect(meanOfSlowestMapOrSetBenchmark - meanOfFastestMapOrSetBenchmark).to.be.below(0.005);
+                expect(indexOfFastestBenchmark).to.oneOf([ 7, 11 ]);
 
                 done();
             }
@@ -83,6 +62,17 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
+            .add('values below 2 ** 30 stored in an Array', () => {
+                const uniqueNumbersAsArray = [];
+
+                for (let i = 0; i < numberOfValues; i += 1) {
+                    const number = Math.floor(randomValues[i] * 1073741824);
+
+                    if (!uniqueNumbersAsArray.includes(number)) {
+                        uniqueNumbersAsArray.push(number);
+                    }
+                }
+            })
             .add('values below Number.MAX_SAFE_INTEGER stored in a Map', () => {
                 const uniqueNumbersAsMap = new Map();
 
@@ -116,6 +106,17 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
+            .add('values below 2 ** 30 stored in a Map', () => {
+                const uniqueNumbersAsMap = new Map();
+
+                for (let i = 0; i < numberOfValues; i += 1) {
+                    const number = Math.floor(randomValues[i] * 1073741824);
+
+                    if (!uniqueNumbersAsMap.has(number)) {
+                        uniqueNumbersAsMap.set(number, true);
+                    }
+                }
+            })
             .add('values below Number.MAX_SAFE_INTEGER stored in a Set', () => {
                 const uniqueNumbersAsSet = new Set();
 
@@ -143,6 +144,17 @@ describe('Array/Map/Set modifications', () => {
 
                 for (let i = 0; i < numberOfValues; i += 1) {
                     const number = Math.floor(randomValues[i] * 2147483648);
+
+                    if (!uniqueNumbersAsSet.has(number)) {
+                        uniqueNumbersAsSet.add(number);
+                    }
+                }
+            })
+            .add('values below 2 ** 30 stored in a Set', () => {
+                const uniqueNumbersAsSet = new Set();
+
+                for (let i = 0; i < numberOfValues; i += 1) {
+                    const number = Math.floor(randomValues[i] * 1073741824);
 
                     if (!uniqueNumbersAsSet.has(number)) {
                         uniqueNumbersAsSet.add(number);

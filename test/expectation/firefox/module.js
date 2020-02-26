@@ -20,23 +20,19 @@ describe('Array/Map/Set modifications', () => {
                     .range(0, suite.length)
                     .map((index) => ({ index, mean: suite[index].stats.mean }));
                 const [ meanOfFastestArrayBenchmark ] = indexAndMeans
-                    .slice(0, 3)
+                    .slice(0, 4)
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ mean }) => mean);
                 const [ meanOfFastestMapBenchmark, , meanOfSlowestMapBenchmark ] = indexAndMeans
-                    .slice(3, 6)
+                    .slice(4, 8)
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ mean }) => mean);
                 const [ meanOfFastestSetBenchmark, , meanOfSlowestSetBenchmark ] = indexAndMeans
-                    .slice(6, 9)
+                    .slice(8, 12)
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ mean }) => mean);
-                const meanOfFastestMapOrSetBenchmark = (meanOfFastestMapBenchmark < meanOfFastestSetBenchmark) ?
-                    meanOfFastestMapBenchmark :
-                    meanOfFastestSetBenchmark;
-                const meanOfSlowestMapOrSetBenchmark = (meanOfSlowestMapBenchmark > meanOfSlowestSetBenchmark) ?
-                    meanOfSlowestMapBenchmark :
-                    meanOfSlowestSetBenchmark;
+                const meanOfFastestMapOrSetBenchmark = Math.min(meanOfFastestMapBenchmark, meanOfFastestSetBenchmark);
+                const meanOfSlowestMapOrSetBenchmark = Math.max(meanOfSlowestMapBenchmark, meanOfSlowestSetBenchmark);
 
                 // Expect the usage of a Map or Set to be always faster as using an Array.
                 expect(meanOfSlowestMapBenchmark).to.be.below(meanOfFastestArrayBenchmark);
@@ -83,6 +79,17 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
+            .add('values below 2 ** 30 stored in an Array', () => {
+                const uniqueNumbersAsArray = [];
+
+                for (let i = 0; i < numberOfValues; i += 1) {
+                    const number = Math.floor(randomValues[i] * 1073741824);
+
+                    if (!uniqueNumbersAsArray.includes(number)) {
+                        uniqueNumbersAsArray.push(number);
+                    }
+                }
+            })
             .add('values below Number.MAX_SAFE_INTEGER stored in a Map', () => {
                 const uniqueNumbersAsMap = new Map();
 
@@ -116,6 +123,17 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
+            .add('values below 2 ** 30 stored in a Map', () => {
+                const uniqueNumbersAsMap = new Map();
+
+                for (let i = 0; i < numberOfValues; i += 1) {
+                    const number = Math.floor(randomValues[i] * 1073741824);
+
+                    if (!uniqueNumbersAsMap.has(number)) {
+                        uniqueNumbersAsMap.set(number, true);
+                    }
+                }
+            })
             .add('values below Number.MAX_SAFE_INTEGER stored in a Set', () => {
                 const uniqueNumbersAsSet = new Set();
 
@@ -143,6 +161,17 @@ describe('Array/Map/Set modifications', () => {
 
                 for (let i = 0; i < numberOfValues; i += 1) {
                     const number = Math.floor(randomValues[i] * 2147483648);
+
+                    if (!uniqueNumbersAsSet.has(number)) {
+                        uniqueNumbersAsSet.add(number);
+                    }
+                }
+            })
+            .add('values below 2 ** 30 stored in a Set', () => {
+                const uniqueNumbersAsSet = new Set();
+
+                for (let i = 0; i < numberOfValues; i += 1) {
+                    const number = Math.floor(randomValues[i] * 1073741824);
 
                     if (!uniqueNumbersAsSet.has(number)) {
                         uniqueNumbersAsSet.add(number);
