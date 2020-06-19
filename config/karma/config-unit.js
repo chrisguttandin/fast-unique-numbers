@@ -1,22 +1,15 @@
 const { env } = require('process');
 
 module.exports = (config) => {
-
     config.set({
-
         basePath: '../../',
 
-        files: [
-            'test/unit/**/*.js'
-        ],
+        files: ['test/unit/**/*.js'],
 
-        frameworks: [
-            'mocha',
-            'sinon-chai'
-        ],
+        frameworks: ['mocha', 'sinon-chai'],
 
         mime: {
-            'text/x-typescript': [ 'ts', 'tsx' ]
+            'text/x-typescript': ['ts', 'tsx']
         },
 
         preprocessors: {
@@ -27,45 +20,35 @@ module.exports = (config) => {
         webpack: {
             mode: 'development',
             module: {
-                rules: [ {
-                    test: /\.ts?$/,
-                    use: {
-                        loader: 'ts-loader'
+                rules: [
+                    {
+                        test: /\.ts?$/,
+                        use: {
+                            loader: 'ts-loader'
+                        }
                     }
-                } ]
+                ]
             },
             resolve: {
-                extensions: [ '.js', '.ts' ]
+                extensions: ['.js', '.ts']
             }
         },
 
         webpackMiddleware: {
             noInfo: true
         }
-
     });
 
     if (env.TRAVIS) {
-
         config.set({
-
-            browsers: (env.TARGET === 'chrome')
-                ? [
-                    'ChromeSauceLabs'
-                ]
-                : (env.TARGET === 'firefox')
-                    ? [
-                        'FirefoxSauceLabs'
-                    ]
-                    : (env.TARGET === 'safari')
-                        ? [
-                            'SafariSauceLabs'
-                        ]
-                        : [
-                            'ChromeSauceLabs',
-                            'FirefoxSauceLabs',
-                            'SafariSauceLabs'
-                        ],
+            browsers:
+                env.TARGET === 'chrome'
+                    ? ['ChromeSauceLabs']
+                    : env.TARGET === 'firefox'
+                    ? ['FirefoxSauceLabs']
+                    : env.TARGET === 'safari'
+                    ? ['SafariSauceLabs']
+                    : ['ChromeSauceLabs', 'FirefoxSauceLabs', 'SafariSauceLabs'],
 
             captureTimeout: 120000,
 
@@ -86,26 +69,12 @@ module.exports = (config) => {
                     platform: 'macOS 10.15'
                 }
             }
-
         });
-
     } else {
-
         config.set({
-
-            browsers: [
-                'ChromeHeadless',
-                'ChromeCanaryHeadless',
-                'FirefoxHeadless',
-                'FirefoxDeveloperHeadless',
-                'Opera',
-                'Safari'
-            ],
+            browsers: ['ChromeHeadless', 'ChromeCanaryHeadless', 'FirefoxHeadless', 'FirefoxDeveloperHeadless', 'Opera', 'Safari'],
 
             concurrency: 2
-
         });
-
     }
-
 };

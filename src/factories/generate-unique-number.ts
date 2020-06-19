@@ -4,7 +4,7 @@ import { TGenerateUniqueNumberFactory } from '../types';
  * The value of the constant Number.MAX_SAFE_INTEGER equals (2 ** 53 - 1) but it
  * is fairly new.
  */
-const MAX_SAFE_INTEGER = (Number.MAX_SAFE_INTEGER === undefined) ? 9007199254740991 : Number.MAX_SAFE_INTEGER;
+const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER === undefined ? 9007199254740991 : Number.MAX_SAFE_INTEGER;
 const TWO_TO_THE_POWER_OF_TWENTY_NINE = 536870912;
 const TWO_TO_THE_POWER_OF_THIRTY = TWO_TO_THE_POWER_OF_TWENTY_NINE * 2;
 
@@ -20,11 +20,7 @@ export const createGenerateUniqueNumber: TGenerateUniqueNumberFactory = (cache, 
          * unknown it is assumed that the collection contains zero based consecutive
          * numbers.
          */
-        let nextNumber = (lastNumber === undefined)
-            ? collection.size
-            : (lastNumber < TWO_TO_THE_POWER_OF_THIRTY)
-                ? lastNumber + 1
-                : 0;
+        let nextNumber = lastNumber === undefined ? collection.size : lastNumber < TWO_TO_THE_POWER_OF_THIRTY ? lastNumber + 1 : 0;
 
         if (!collection.has(nextNumber)) {
             return cache(collection, nextNumber);

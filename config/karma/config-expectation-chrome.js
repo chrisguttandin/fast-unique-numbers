@@ -1,9 +1,7 @@
 const { env } = require('process');
 
 module.exports = (config) => {
-
     config.set({
-
         basePath: '../../',
 
         browserDisconnectTimeout: 120000,
@@ -34,13 +32,10 @@ module.exports = (config) => {
             'test/expectation/chrome/**/*.js'
         ],
 
-        frameworks: [
-            'mocha',
-            'sinon-chai'
-        ],
+        frameworks: ['mocha', 'sinon-chai'],
 
         mime: {
-            'text/x-typescript': [ 'ts', 'tsx' ]
+            'text/x-typescript': ['ts', 'tsx']
         },
 
         preprocessors: {
@@ -53,38 +48,35 @@ module.exports = (config) => {
         webpack: {
             mode: 'development',
             module: {
-                rules: [ {
-                    test: /\.ts?$/,
-                    use: {
-                        loader: 'ts-loader'
+                rules: [
+                    {
+                        test: /\.ts?$/,
+                        use: {
+                            loader: 'ts-loader'
+                        }
                     }
-                } ]
+                ]
             },
             resolve: {
-                extensions: [ '.js', '.ts' ]
+                extensions: ['.js', '.ts']
             }
         },
 
         webpackMiddleware: {
             noInfo: true
         }
-
     });
 
     if (env.TRAVIS) {
-
         config.set({
-
             browserStack: {
                 accessKey: env.BROWSER_STACK_ACCESS_KEY,
-                build: `${ env.TRAVIS_REPO_SLUG }/${ env.TRAVIS_JOB_NUMBER }/expectation-chrome`,
+                build: `${env.TRAVIS_REPO_SLUG}/${env.TRAVIS_JOB_NUMBER}/expectation-chrome`,
                 username: env.BROWSER_STACK_USERNAME,
                 video: false
             },
 
-            browsers: [
-                'ChromeBrowserStack'
-            ],
+            browsers: ['ChromeBrowserStack'],
 
             captureTimeout: 120000,
 
@@ -96,21 +88,12 @@ module.exports = (config) => {
                     os_version: '10' // eslint-disable-line camelcase
                 }
             }
-
         });
-
     } else {
-
         config.set({
-
-            browsers: [
-                'ChromeHeadless'
-            ],
+            browsers: ['ChromeHeadless'],
 
             concurrency: 1
-
         });
-
     }
-
 };

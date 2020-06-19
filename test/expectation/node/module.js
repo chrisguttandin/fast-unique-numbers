@@ -2,7 +2,6 @@ import Benchmark from 'benchmark';
 import _ from 'lodash';
 
 describe('Array/Map/Set modifications', () => {
-
     it('should show certain performance characteristics', function (done) {
         this.timeout(0);
 
@@ -10,7 +9,7 @@ describe('Array/Map/Set modifications', () => {
          * The initial value of 0.9999999999999999 is used to make sure that
          * we reach the maximum of the random values.
          */
-        const randomValues = [ 0.9999999999999999 ];
+        const randomValues = [0.9999999999999999];
         const numberOfValues = 10000;
 
         for (let i = 1; i < numberOfValues; i += 1) {
@@ -19,13 +18,12 @@ describe('Array/Map/Set modifications', () => {
 
         const suite = new Benchmark.Suite('random number', {
             onComplete: () => {
-                const indexOfFastestBenchmark = _
-                    .range(0, suite.length)
+                const indexOfFastestBenchmark = _.range(0, suite.length)
                     .map((index) => ({ index, mean: suite[index].stats.mean }))
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ index }) => index)[0];
 
-                expect(indexOfFastestBenchmark).to.oneOf([ 5, 8 ]);
+                expect(indexOfFastestBenchmark).to.oneOf([5, 8]);
 
                 done();
             }
@@ -133,5 +131,4 @@ describe('Array/Map/Set modifications', () => {
             })
             .run({ async: true });
     });
-
 });

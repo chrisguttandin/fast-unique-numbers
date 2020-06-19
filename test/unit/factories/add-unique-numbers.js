@@ -2,7 +2,6 @@ import { createAddUniqueNumber } from '../../../src/factories/add-unique-number'
 import { stub } from 'sinon';
 
 describe('addUniqueNumber()', () => {
-
     let addUniqueNumber;
     let generateUniqueNumber;
     let set;
@@ -26,5 +25,4 @@ describe('addUniqueNumber()', () => {
         expect(set.size).to.equal(1);
         expect(set.has(17)).to.be.true;
     });
-
 });

@@ -1,5 +1,4 @@
 describe('Array/Map/Set modifications', () => {
-
     it('should show certain performance characteristics', function (done) {
         this.timeout(0);
 
@@ -7,27 +6,27 @@ describe('Array/Map/Set modifications', () => {
          * The initial value of 0.9999999999999999 is used to make sure that
          * we reach the maximum of the random values.
          */
-        const randomValues = [ 0.9999999999999999 ];
+        const randomValues = [0.9999999999999999];
         const numberOfValues = 10000;
 
         for (let i = 1; i < numberOfValues; i += 1) {
             randomValues.push(Math.random());
         }
 
-        const suite = new Benchmark.Suite('random number', { // eslint-disable-line no-undef
+        // eslint-disable-next-line no-undef
+        const suite = new Benchmark.Suite('random number', {
             onComplete: () => {
-                const indexAndMeans = _ // eslint-disable-line no-undef
-                    .range(0, suite.length)
+                const indexAndMeans = _.range(0, suite.length) // eslint-disable-line no-undef
                     .map((index) => ({ index, mean: suite[index].stats.mean }));
-                const [ meanOfFastestArrayBenchmark ] = indexAndMeans
+                const [meanOfFastestArrayBenchmark] = indexAndMeans
                     .slice(0, 4)
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ mean }) => mean);
-                const [ meanOfFastestMapBenchmark, , meanOfSlowestMapBenchmark ] = indexAndMeans
+                const [meanOfFastestMapBenchmark, , meanOfSlowestMapBenchmark] = indexAndMeans
                     .slice(4, 8)
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ mean }) => mean);
-                const [ meanOfFastestSetBenchmark, , meanOfSlowestSetBenchmark ] = indexAndMeans
+                const [meanOfFastestSetBenchmark, , meanOfSlowestSetBenchmark] = indexAndMeans
                     .slice(8, 12)
                     .sort((a, b) => a.mean - b.mean)
                     .map(({ mean }) => mean);
@@ -180,5 +179,4 @@ describe('Array/Map/Set modifications', () => {
             })
             .run({ async: true });
     });
-
 });

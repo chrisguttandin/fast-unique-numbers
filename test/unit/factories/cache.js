@@ -1,7 +1,6 @@
 import { createCache } from '../../../src/factories/cache';
 
 describe('cache()', () => {
-
     let cache;
     let lastNumberWeakMap;
 
@@ -12,7 +11,6 @@ describe('cache()', () => {
     });
 
     describe('with a map', () => {
-
         let map;
 
         beforeEach(() => {
@@ -28,11 +26,9 @@ describe('cache()', () => {
 
             expect(lastNumberWeakMap.get(map)).to.equal(29);
         });
-
     });
 
     describe('with a set', () => {
-
         let set;
 
         beforeEach(() => {
@@ -48,7 +44,5 @@ describe('cache()', () => {
 
             expect(lastNumberWeakMap.get(set)).to.equal(29);
         });
-
     });
-
 });

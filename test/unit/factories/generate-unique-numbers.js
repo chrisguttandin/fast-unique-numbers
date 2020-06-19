@@ -2,7 +2,6 @@ import { createCache } from '../../../src/factories/cache';
 import { createGenerateUniqueNumber } from '../../../src/factories/generate-unique-number';
 
 describe('generateUniqueNumber()', () => {
-
     let generateUniqueNumber;
     let lastNumberWeakMap;
 
@@ -13,7 +12,6 @@ describe('generateUniqueNumber()', () => {
     });
 
     describe('with an empty map', () => {
-
         let map;
 
         beforeEach(() => {
@@ -41,15 +39,18 @@ describe('generateUniqueNumber()', () => {
                 expect(number).to.equal(i);
             }
         });
-
     });
 
     describe('with a prefilled map', () => {
-
         let map;
 
         beforeEach(() => {
-            map = new Map([ [ 0, true ], [ 1, true ], [ 2, true ], [ 3, true ] ]);
+            map = new Map([
+                [0, true],
+                [1, true],
+                [2, true],
+                [3, true]
+            ]);
         });
 
         it('should generate a number', () => {
@@ -73,11 +74,9 @@ describe('generateUniqueNumber()', () => {
                 expect(number).to.equal(i + 4);
             }
         });
-
     });
 
     describe('with an empty set', () => {
-
         let set;
 
         beforeEach(() => {
@@ -105,15 +104,13 @@ describe('generateUniqueNumber()', () => {
                 expect(number).to.equal(i);
             }
         });
-
     });
 
     describe('with a prefilled set', () => {
-
         let set;
 
         beforeEach(() => {
-            set = new Set([ 0, 1, 2, 3 ]);
+            set = new Set([0, 1, 2, 3]);
         });
 
         it('should generate a number', () => {
@@ -137,7 +134,6 @@ describe('generateUniqueNumber()', () => {
                 expect(number).to.equal(i + 4);
             }
         });
-
     });
 
     /*
@@ -216,5 +212,4 @@ describe('generateUniqueNumber()', () => {
      *         });
      * });
      */
-
 });
