@@ -43,36 +43,44 @@ module.exports = (config) => {
 
     if (env.TRAVIS) {
         config.set({
+            browserStack: {
+                accessKey: env.BROWSER_STACK_ACCESS_KEY,
+                build: `${env.TRAVIS_REPO_SLUG}/${env.TRAVIS_JOB_NUMBER}/unit-${env.TARGET}`,
+                username: env.BROWSER_STACK_USERNAME,
+                video: false
+            },
+
             browsers:
                 env.TARGET === 'chrome'
-                    ? ['ChromeSauceLabs']
+                    ? ['ChromeBrowserStack']
                     : env.TARGET === 'firefox'
-                    ? ['FirefoxSauceLabs']
+                    ? ['FirefoxBrowserStack']
                     : env.TARGET === 'safari'
-                    ? ['SafariSauceLabs']
-                    : ['ChromeSauceLabs', 'FirefoxSauceLabs', 'SafariSauceLabs'],
+                    ? ['SafariBrowserStack']
+                    : ['ChromeBrowserStack', 'FirefoxBrowserStack', 'SafariBrowserStack'],
 
             captureTimeout: 120000,
 
             customLaunchers: {
-                ChromeSauceLabs: {
-                    base: 'SauceLabs',
-                    browserName: 'chrome',
-                    platform: 'macOS 10.15'
+                ChromeBrowserStack: {
+                    base: 'BrowserStack',
+                    browser: 'chrome',
+                    os: 'OS X',
+                    os_version: 'High Sierra' // eslint-disable-line camelcase
                 },
-                FirefoxSauceLabs: {
-                    base: 'SauceLabs',
-                    browserName: 'firefox',
-                    platform: 'macOS 10.15'
+                FirefoxBrowserStack: {
+                    base: 'BrowserStack',
+                    browser: 'firefox',
+                    os: 'Windows',
+                    os_version: '10' // eslint-disable-line camelcase
                 },
-                SafariSauceLabs: {
-                    base: 'SauceLabs',
-                    browserName: 'safari',
-                    platform: 'macOS 10.15'
+                SafariBrowserStack: {
+                    base: 'BrowserStack',
+                    browser: 'safari',
+                    os: 'OS X',
+                    os_version: 'High Sierra' // eslint-disable-line camelcase
                 }
-            },
-
-            tunnelIdentifier: env.TRAVIS_JOB_NUMBER
+            }
         });
     } else {
         config.set({
