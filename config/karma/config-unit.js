@@ -4,6 +4,8 @@ module.exports = (config) => {
     config.set({
         basePath: '../../',
 
+        browserNoActivityTimeout: 20000,
+
         files: ['test/unit/**/*.js'],
 
         frameworks: ['mocha', 'sinon-chai'],
