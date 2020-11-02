@@ -25,13 +25,13 @@ module.exports = (grunt) => {
             cmd: `karma start config/karma/config-expectation-firefox.js ${continuous ? '--concurrency Infinity' : '--single-run'}`
         },
         'test-expectation-node': {
-            cmd: 'mocha --bail --recursive --require config/mocha/config-expectation.js test/expectation/node'
+            cmd: 'mocha --bail --parallel --recursive --require config/mocha/config-expectation.js test/expectation/node'
         },
         'test-unit-browser': {
             cmd: `karma start config/karma/config-unit.js ${continuous ? '--concurrency Infinity' : '--single-run'}`
         },
         'test-unit-node': {
-            cmd: 'mocha --bail --recursive --require config/mocha/config-unit.js test/unit'
+            cmd: 'mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit'
         }
     };
 };
