@@ -17,7 +17,13 @@ jobs:
                 include:
                     - node-version: 14.x
                       target: chrome
+                      type: expectation
+                    - node-version: 14.x
+                      target: chrome
                       type: unit
+                    - node-version: 14.x
+                      target: firefox
+                      type: expectation
                     - node-version: 14.x
                       target: firefox
                       type: unit
