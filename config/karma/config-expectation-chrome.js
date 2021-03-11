@@ -33,6 +33,8 @@ module.exports = (config) => {
             'test/expectation/chrome/**/*.js': 'webpack'
         },
 
+        reporters: ['dots'],
+
         webpack: {
             mode: 'development',
             module: {
