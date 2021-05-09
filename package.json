@@ -58,7 +58,7 @@
         "webpack": "^5.36.2"
     },
     "engines": {
-        "node": ">=10.15.3"
+        "node": ">=12.20.1"
     },
     "files": [
         "build/es2019/",
