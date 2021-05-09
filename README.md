@@ -2,7 +2,6 @@
 
 **A module to create a set of unique numbers as fast as possible.**
 
-[![tests](https://img.shields.io/travis/chrisguttandin/fast-unique-numbers/master.svg?style=flat-square)](https://travis-ci.org/chrisguttandin/fast-unique-numbers)
 [![dependencies](https://img.shields.io/david/chrisguttandin/fast-unique-numbers.svg?style=flat-square)](https://www.npmjs.com/package/fast-unique-numbers)
 [![version](https://img.shields.io/npm/v/fast-unique-numbers.svg?style=flat-square)](https://www.npmjs.com/package/fast-unique-numbers)
 
@@ -28,7 +27,7 @@ This function takes a `Set` of numbers as argument and appends a new unique numb
 ```js
 import { addUniqueNumber } from 'fast-unique-numbers';
 
-const set = new Set([ 1, 4, 8 ]);
+const set = new Set([1, 4, 8]);
 const uniqueNumber = addUniqueNumber(set);
 
 console.log(uniqueNumber); // 3
@@ -43,8 +42,8 @@ This function can be used to generate a unique number which is not yet present i
 import { generateUniqueNumber } from 'fast-unique-numbers';
 
 const map = new Map([
-    [ 1, 'something' ],
-    [ 4, 'something else' ]
+    [1, 'something'],
+    [4, 'something else']
 ]);
 
 const uniqueNumber = generateUniqueNumber(map);
