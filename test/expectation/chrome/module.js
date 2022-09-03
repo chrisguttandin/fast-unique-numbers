@@ -1,5 +1,7 @@
+import { Bench } from 'tinybench';
+
 describe('Array/Map/Set modifications', () => {
-    it('should show certain performance characteristics', function (done) {
+    it('should show certain performance characteristics', async function () {
         this.timeout(0);
 
         /*
@@ -13,21 +15,9 @@ describe('Array/Map/Set modifications', () => {
             randomValues.push(Math.random());
         }
 
-        // eslint-disable-next-line no-undef
-        const suite = new Benchmark.Suite('random number', {
-            onComplete: () => {
-                const indexOfFastestBenchmark = _.range(0, suite.length) // eslint-disable-line no-undef
-                    .map((index) => ({ index, mean: suite[index].stats.mean }))
-                    .sort((a, b) => a.mean - b.mean)
-                    .map(({ index }) => index)[0];
+        const bench = new Bench();
 
-                expect(indexOfFastestBenchmark).to.oneOf([7, 11]);
-
-                done();
-            }
-        });
-
-        suite
+        await bench
             .add('values below Number.MAX_SAFE_INTEGER stored in an Array', () => {
                 const uniqueNumbersAsArray = [];
 
@@ -160,6 +150,23 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
-            .run({ async: true });
+            .run();
+
+        const [fastestArrayTask] = bench.tasks
+            .filter((task) => task.name.endsWith(' in an Array'))
+            .sort((a, b) => a.result.mean - b.result.mean);
+        const [fastestMapTask, , slowestMapTask] = bench.tasks
+            .filter((task) => task.name.endsWith(' in a Map'))
+            .sort((a, b) => a.result.mean - b.result.mean);
+        const [fastestSetTask, , slowestSetTask] = bench.tasks
+            .filter((task) => task.name.endsWith(' in a Set'))
+            .sort((a, b) => a.result.mean - b.result.mean);
+
+        // Expect the usage of a Map or Set to be always faster as using an Array.
+        expect(slowestMapTask.result.mean).to.be.below(fastestArrayTask.result.mean);
+        expect(slowestSetTask.result.mean).to.be.below(fastestArrayTask.result.mean);
+
+        expect(fastestMapTask.name).to.equal('values below 2 ** 30 stored in a Map');
+        expect(fastestSetTask.name).to.equal('values below 2 ** 30 stored in a Set');
     });
 });

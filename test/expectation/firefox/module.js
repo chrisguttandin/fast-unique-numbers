@@ -1,5 +1,7 @@
+import { Bench } from 'tinybench';
+
 describe('Array/Map/Set modifications', () => {
-    it('should show certain performance characteristics', function (done) {
+    it('should show certain performance characteristics', async function () {
         this.timeout(0);
 
         /*
@@ -13,38 +15,9 @@ describe('Array/Map/Set modifications', () => {
             randomValues.push(Math.random());
         }
 
-        // eslint-disable-next-line no-undef
-        const suite = new Benchmark.Suite('random number', {
-            onComplete: () => {
-                const indexAndMeans = _.range(0, suite.length) // eslint-disable-line no-undef
-                    .map((index) => ({ index, mean: suite[index].stats.mean }));
-                const [meanOfFastestArrayBenchmark] = indexAndMeans
-                    .slice(0, 4)
-                    .sort((a, b) => a.mean - b.mean)
-                    .map(({ mean }) => mean);
-                const [meanOfFastestMapBenchmark, , meanOfSlowestMapBenchmark] = indexAndMeans
-                    .slice(4, 8)
-                    .sort((a, b) => a.mean - b.mean)
-                    .map(({ mean }) => mean);
-                const [meanOfFastestSetBenchmark, , meanOfSlowestSetBenchmark] = indexAndMeans
-                    .slice(8, 12)
-                    .sort((a, b) => a.mean - b.mean)
-                    .map(({ mean }) => mean);
-                const meanOfFastestMapOrSetBenchmark = Math.min(meanOfFastestMapBenchmark, meanOfFastestSetBenchmark);
-                const meanOfSlowestMapOrSetBenchmark = Math.max(meanOfSlowestMapBenchmark, meanOfSlowestSetBenchmark);
+        const bench = new Bench();
 
-                // Expect the usage of a Map or Set to be always faster as using an Array.
-                expect(meanOfSlowestMapBenchmark).to.be.below(meanOfFastestArrayBenchmark);
-                expect(meanOfSlowestSetBenchmark).to.be.below(meanOfFastestArrayBenchmark);
-
-                // Expect all the Map and Set benchmarks to not differ much.
-                expect(meanOfSlowestMapOrSetBenchmark - meanOfFastestMapOrSetBenchmark).to.be.below(0.005);
-
-                done();
-            }
-        });
-
-        suite
+        await bench
             .add('values below Number.MAX_SAFE_INTEGER stored in an Array', () => {
                 const uniqueNumbersAsArray = [];
 
@@ -177,6 +150,23 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
-            .run({ async: true });
+            .run();
+
+        const [fastestArrayTask] = bench.tasks
+            .filter((task) => task.name.endsWith(' in an Array'))
+            .sort((a, b) => a.result.mean - b.result.mean);
+        const [fastestMapTask, , slowestMapTask] = bench.tasks
+            .filter((task) => task.name.endsWith(' in a Map'))
+            .sort((a, b) => a.result.mean - b.result.mean);
+        const [fastestSetTask, , slowestSetTask] = bench.tasks
+            .filter((task) => task.name.endsWith(' in a Set'))
+            .sort((a, b) => a.result.mean - b.result.mean);
+
+        // Expect the usage of a Map or Set to be always faster as using an Array.
+        expect(slowestMapTask.result.mean).to.be.below(fastestArrayTask.result.mean);
+        expect(slowestSetTask.result.mean).to.be.below(fastestArrayTask.result.mean);
+
+        expect(fastestMapTask.name).to.oneOf(['values below 2 ** 30 stored in a Map', 'values below 2 ** 31 stored in a Map']);
+        expect(fastestSetTask.name).to.oneOf(['values below 2 ** 30 stored in a Set', 'values below 2 ** 31 stored in a Set']);
     });
 });

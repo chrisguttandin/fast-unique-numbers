@@ -18,21 +18,7 @@ module.exports = (config) => {
 
         concurrency: 1,
 
-        files: [
-            {
-                included: true,
-                pattern: require.resolve('lodash'),
-                served: true,
-                watched: false
-            },
-            {
-                included: true,
-                pattern: require.resolve('benchmark'),
-                served: true,
-                watched: false
-            },
-            'test/expectation/chrome/**/*.js'
-        ],
+        files: ['test/expectation/chrome/**/*.js'],
 
         frameworks: ['mocha', 'sinon-chai'],
 
