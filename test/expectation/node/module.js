@@ -1,12 +1,8 @@
-// eslint-disable-next-line no-undef
-if (globalThis.EventTarget === undefined) {
-    globalThis.EventTarget = class {}; // eslint-disable-line no-undef
-}
-
-import { Bench } from 'tinybench';
+import Benchmark from 'benchmark';
+import _ from 'lodash';
 
 describe('Array/Map/Set modifications', () => {
-    it('should show certain performance characteristics', async function () {
+    it('should show certain performance characteristics', function (done) {
         this.timeout(0);
 
         /*
@@ -20,9 +16,20 @@ describe('Array/Map/Set modifications', () => {
             randomValues.push(Math.random());
         }
 
-        const bench = new Bench();
+        const suite = new Benchmark.Suite('random number', {
+            onComplete: () => {
+                const indexOfFastestBenchmark = _.range(0, suite.length)
+                    .map((index) => ({ index, mean: suite[index].stats.mean }))
+                    .sort((a, b) => a.mean - b.mean)
+                    .map(({ index }) => index)[0];
 
-        await bench
+                expect(indexOfFastestBenchmark).to.oneOf([5, 8]);
+
+                done();
+            }
+        });
+
+        suite
             .add('values below Number.MAX_SAFE_INTEGER stored in an Array', () => {
                 const uniqueNumbersAsArray = [];
 
@@ -50,17 +57,6 @@ describe('Array/Map/Set modifications', () => {
 
                 for (let i = 0; i < numberOfValues; i += 1) {
                     const number = Math.floor(randomValues[i] * 2147483648);
-
-                    if (!uniqueNumbersAsArray.includes(number)) {
-                        uniqueNumbersAsArray.push(number);
-                    }
-                }
-            })
-            .add('values below 2 ** 30 stored in an Array', () => {
-                const uniqueNumbersAsArray = [];
-
-                for (let i = 0; i < numberOfValues; i += 1) {
-                    const number = Math.floor(randomValues[i] * 1073741824);
 
                     if (!uniqueNumbersAsArray.includes(number)) {
                         uniqueNumbersAsArray.push(number);
@@ -100,17 +96,6 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
-            .add('values below 2 ** 30 stored in a Map', () => {
-                const uniqueNumbersAsMap = new Map();
-
-                for (let i = 0; i < numberOfValues; i += 1) {
-                    const number = Math.floor(randomValues[i] * 1073741824);
-
-                    if (!uniqueNumbersAsMap.has(number)) {
-                        uniqueNumbersAsMap.set(number, true);
-                    }
-                }
-            })
             .add('values below Number.MAX_SAFE_INTEGER stored in a Set', () => {
                 const uniqueNumbersAsSet = new Set();
 
@@ -144,34 +129,6 @@ describe('Array/Map/Set modifications', () => {
                     }
                 }
             })
-            .add('values below 2 ** 30 stored in a Set', () => {
-                const uniqueNumbersAsSet = new Set();
-
-                for (let i = 0; i < numberOfValues; i += 1) {
-                    const number = Math.floor(randomValues[i] * 1073741824);
-
-                    if (!uniqueNumbersAsSet.has(number)) {
-                        uniqueNumbersAsSet.add(number);
-                    }
-                }
-            })
-            .run();
-
-        const [fastestArrayTask] = bench.tasks
-            .filter((task) => task.name.endsWith(' in an Array'))
-            .sort((a, b) => a.result.mean - b.result.mean);
-        const [fastestMapTask, , slowestMapTask] = bench.tasks
-            .filter((task) => task.name.endsWith(' in a Map'))
-            .sort((a, b) => a.result.mean - b.result.mean);
-        const [fastestSetTask, , slowestSetTask] = bench.tasks
-            .filter((task) => task.name.endsWith(' in a Set'))
-            .sort((a, b) => a.result.mean - b.result.mean);
-
-        // Expect the usage of a Map or Set to be always faster as using an Array.
-        expect(slowestMapTask.result.mean).to.be.below(fastestArrayTask.result.mean);
-        expect(slowestSetTask.result.mean).to.be.below(fastestArrayTask.result.mean);
-
-        expect(fastestMapTask.name).to.oneOf(['values below 2 ** 30 stored in a Map', 'values below 2 ** 31 stored in a Map']);
-        expect(fastestSetTask.name).to.oneOf(['values below 2 ** 30 stored in a Set', 'values below 2 ** 31 stored in a Set']);
+            .run({ async: true });
     });
 });
