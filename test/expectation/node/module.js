@@ -1,3 +1,8 @@
+// eslint-disable-next-line no-undef
+if (globalThis.EventTarget === undefined) {
+    globalThis.EventTarget = class {}; // eslint-disable-line no-undef
+}
+
 import { Bench } from 'tinybench';
 
 describe('Array/Map/Set modifications', () => {
