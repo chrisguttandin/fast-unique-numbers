@@ -152,6 +152,10 @@ describe('Array/Map/Set modifications', () => {
             })
             .run();
 
+        for (const { error } of bench.results) {
+            expect(error).to.be.undefined;
+        }
+
         const [fastestArrayTask] = bench.tasks
             .filter((task) => task.name.endsWith(' in an Array'))
             .sort((a, b) => a.result.mean - b.result.mean);
