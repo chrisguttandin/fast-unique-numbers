@@ -1,4 +1,4 @@
-import { TGenerateUniqueNumberFactory } from '../types';
+import type { createCache } from './cache';
 
 /*
  * The value of the constant Number.MAX_SAFE_INTEGER equals (2 ** 53 - 1) but it
@@ -8,8 +8,11 @@ const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER === undefined ? 900719925474099
 const TWO_TO_THE_POWER_OF_TWENTY_NINE = 536870912;
 const TWO_TO_THE_POWER_OF_THIRTY = TWO_TO_THE_POWER_OF_TWENTY_NINE * 2;
 
-export const createGenerateUniqueNumber: TGenerateUniqueNumberFactory = (cache, lastNumberWeakMap) => {
-    return (collection) => {
+export const createGenerateUniqueNumber = (
+    cache: ReturnType<typeof createCache>,
+    lastNumberWeakMap: WeakMap<Map<number, any> | Set<number>, number>
+) => {
+    return (collection: Map<number, any> | Set<number>) => {
         const lastNumber = lastNumberWeakMap.get(collection);
 
         /*
