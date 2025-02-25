@@ -1,6 +1,9 @@
 import { Bench } from 'tinybench';
 
 describe('Array/Map/Set modifications', () => {
+    // eslint-disable-next-line no-undef
+    before((done) => setTimeout(done, 100));
+
     it('should show certain performance characteristics', async function () {
         this.timeout(0);
 
