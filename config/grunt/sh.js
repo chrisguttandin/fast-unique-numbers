@@ -1,24 +1,22 @@
-module.exports = (grunt) => {
-    const continuous = grunt.option('continuous') === true;
-
+module.exports = () => {
     return {
         'build': {
             cmd: 'npm run build'
         },
         'test-expectation-chrome': {
-            cmd: `karma start config/karma/config-expectation-chrome.js ${continuous ? '--concurrency Infinity' : '--single-run'}`
+            cmd: 'npm run test:expectation-chrome'
         },
         'test-expectation-firefox': {
-            cmd: `karma start config/karma/config-expectation-firefox.js ${continuous ? '--concurrency Infinity' : '--single-run'}`
+            cmd: 'npm run test:expectation-firefox'
         },
         'test-expectation-node': {
-            cmd: 'mocha --bail --parallel --recursive --require config/mocha/config-expectation.js test/expectation/node'
+            cmd: 'npm run test:expectation-node'
         },
         'test-unit-browser': {
-            cmd: `karma start config/karma/config-unit.js ${continuous ? '--concurrency Infinity' : '--single-run'}`
+            cmd: 'npm run test:unit-browser'
         },
         'test-unit-node': {
-            cmd: 'mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit'
+            cmd: 'npm run test:unit-node'
         }
     };
 };
