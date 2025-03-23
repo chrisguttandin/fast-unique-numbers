@@ -87,12 +87,12 @@
         "lint:test": "eslint --config config/eslint/test.json --ext .js --report-unused-disable-directives test/",
         "prepare": "husky",
         "prepublishOnly": "npm run build",
-        "test": "npm run lint && grunt test",
-        "test:expectation-chrome": "karma start config/karma/config-expectation-chrome.js --single-run",
-        "test:expectation-firefox": "karma start config/karma/config-expectation-firefox.js --single-run",
-        "test:expectation-node": "mocha --bail --parallel --recursive --require config/mocha/config-expectation.js test/expectation/node",
-        "test:unit-browser": "karma start config/karma/config-unit.js --single-run",
-        "test:unit-node": "mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit"
+        "test": "npm run lint && npm run build && npm run test:expectation-chrome && npm run test:expectation-firefox && npm run test:expectation-node && npm run test:unit-browser && npm run test:unit-node",
+        "test:expectation-chrome": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" ]; then karma start config/karma/config-expectation-chrome.js --single-run; fi",
+        "test:expectation-firefox": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"firefox\" ]; then karma start config/karma/config-expectation-firefox.js --single-run; fi",
+        "test:expectation-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-expectation.js test/expectation/node; fi",
+        "test:unit-browser": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" -o \"$TARGET\" = \"firefox\" -o \"$TARGET\" = \"safari\" ]; then karma start config/karma/config-unit.js --single-run; fi",
+        "test:unit-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit; fi"
     },
     "types": "build/es2019/module.d.ts",
     "version": "9.0.19"
