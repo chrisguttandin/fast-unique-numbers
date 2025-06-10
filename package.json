@@ -91,5 +91,5 @@
         "test:unit-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit; fi"
     },
     "types": "build/es2019/module.d.ts",
-    "version": "9.0.21"
+    "version": "9.0.22"
 }
