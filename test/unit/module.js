@@ -1,4 +1,5 @@
 import { addUniqueNumber, generateUniqueNumber } from '../../src/module';
+import { describe, expect, it } from 'vitest';
 
 describe('module', () => {
     it('should export the addUniqueNumber function', () => {

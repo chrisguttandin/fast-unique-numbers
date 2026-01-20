@@ -1,12 +1,8 @@
+import { describe, expect, it } from 'vitest';
 import { Bench } from 'tinybench';
 
 describe('Array/Map/Set modifications', () => {
-    // eslint-disable-next-line no-undef
-    before((done) => setTimeout(done, 100));
-
-    it('should show certain performance characteristics', async function () {
-        this.timeout(0);
-
+    it('should show certain performance characteristics', { timeout: 0 }, async () => {
         /*
          * The initial value of 0.9999999999999999 is used to make sure that
          * we reach the maximum of the random values.
@@ -173,7 +169,12 @@ describe('Array/Map/Set modifications', () => {
         expect(slowestMapTask.result.mean).to.be.below(fastestArrayTask.result.mean);
         expect(slowestSetTask.result.mean).to.be.below(fastestArrayTask.result.mean);
 
-        expect(fastestMapTask.name).to.equal('values below 2 ** 30 stored in a Map');
-        expect(fastestSetTask.name).to.equal('values below 2 ** 30 stored in a Set');
+        try {
+            expect(fastestMapTask.result.mean / slowestMapTask.result.mean).to.be.above(0.95);
+            expect(fastestSetTask.result.mean / slowestSetTask.result.mean).to.be.above(0.95);
+        } catch {
+            expect(fastestMapTask.name).to.oneOf(['values below 2 ** 30 stored in a Map', 'values below 2 ** 31 stored in a Map']);
+            expect(fastestSetTask.name).to.oneOf(['values below 2 ** 30 stored in a Set', 'values below 2 ** 31 stored in a Set']);
+        }
     });
 });

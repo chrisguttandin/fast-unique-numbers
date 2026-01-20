@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { createAddUniqueNumber } from '../../../src/factories/add-unique-number';
 import { stub } from 'sinon';
 

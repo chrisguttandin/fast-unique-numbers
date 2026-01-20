@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { createCache } from '../../../src/factories/cache';
 import { createGenerateUniqueNumber } from '../../../src/factories/generate-unique-number';
 

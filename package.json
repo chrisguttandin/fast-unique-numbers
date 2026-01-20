@@ -86,11 +86,11 @@
         "prepare": "husky",
         "prepublishOnly": "npm run build",
         "test": "npm run lint && npm run build && npm run test:expectation-chrome && npm run test:expectation-firefox && npm run test:expectation-node && npm run test:unit-browser && npm run test:unit-node",
-        "test:expectation-chrome": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" ]; then karma start config/karma/config-expectation-chrome.js --single-run; fi",
-        "test:expectation-firefox": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"firefox\" ]; then karma start config/karma/config-expectation-firefox.js --single-run; fi",
-        "test:expectation-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-expectation.js test/expectation/node; fi",
-        "test:unit-browser": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" -o \"$TARGET\" = \"firefox\" -o \"$TARGET\" = \"safari\" ]; then karma start config/karma/config-unit.js --single-run; fi",
-        "test:unit-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then mocha --bail --parallel --recursive --require config/mocha/config-unit.js test/unit; fi"
+        "test:expectation-chrome": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" ]; then npx vitest --config config/vitest/expectation-chrome-current.ts; fi",
+        "test:expectation-firefox": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"firefox\" ]; then npx vitest --config config/vitest/expectation-firefox-current.ts; fi",
+        "test:expectation-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"expectation\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then npx vitest --config config/vitest/expectation-node.ts; fi",
+        "test:unit-browser": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"chrome\" -o \"$TARGET\" = \"firefox\" -o \"$TARGET\" = \"safari\" ]; then npx vitest --config config/vitest/unit.ts; fi",
+        "test:unit-node": "if [ \"$TYPE\" = \"\" -o \"$TYPE\" = \"unit\" ] && [ \"$TARGET\" = \"\" -o \"$TARGET\" = \"node\" ]; then npx vitest --browser.enabled false --config config/vitest/unit.ts; fi"
     },
     "types": "build/es2019/module.d.ts",
     "version": "9.0.26"
