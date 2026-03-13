@@ -1,6 +1,5 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createAddUniqueNumber } from '../../../src/factories/add-unique-number';
-import { stub } from 'sinon';
 
 describe('addUniqueNumber()', () => {
     let addUniqueNumber;
@@ -8,12 +7,12 @@ describe('addUniqueNumber()', () => {
     let set;
 
     beforeEach(() => {
-        generateUniqueNumber = stub();
+        generateUniqueNumber = vi.fn();
         set = new Set();
 
         addUniqueNumber = createAddUniqueNumber(generateUniqueNumber);
 
-        generateUniqueNumber.returns(17);
+        generateUniqueNumber.mockReturnValue(17);
     });
 
     it('should return the number returned by generateUniqueNumber()', () => {
