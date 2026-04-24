@@ -3,18 +3,8 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
     test: {
-        browser: {
-            enabled: true,
-            instances: [
-                {
-                    browser: 'firefox',
-                    name: 'Firefox',
-                    provider: webdriverio({
-                        capabilities: { 'moz:firefoxOptions': { args: ['-headless'] } }
-                    })
-                }
-            ]
-        },
+        bail: 1,
+        browser: { enabled: true, instances: [{ browser: 'firefox', headless: true, name: 'Firefox', provider: webdriverio() }] },
         dir: 'test/expectation/firefox/current/',
         include: ['**/*.js'],
         watch: false
