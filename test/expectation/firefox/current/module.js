@@ -171,9 +171,13 @@ describe('Array/Map/Set modifications', () => {
 
         try {
             expect(fastestMapTask.result.mean / slowestMapTask.result.mean).to.be.above(0.95);
-            expect(fastestSetTask.result.mean / slowestSetTask.result.mean).to.be.above(0.95);
         } catch {
             expect(fastestMapTask.name).to.oneOf(['values below 2 ** 30 stored in a Map', 'values below 2 ** 31 stored in a Map']);
+        }
+
+        try {
+            expect(fastestSetTask.result.mean / slowestSetTask.result.mean).to.be.above(0.95);
+        } catch {
             expect(fastestSetTask.name).to.oneOf(['values below 2 ** 30 stored in a Set', 'values below 2 ** 31 stored in a Set']);
         }
     });
